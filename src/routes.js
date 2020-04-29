@@ -1,11 +1,11 @@
 const router = require('express').Router();
 
+const AuthController = require('./controllers/AuthController');
 const UserController = require('./controllers/UserController');
 const BookletController = require('./controllers/BookletController');
 
-router.get('/', (req,res)=>{
-    return res.send('Deu bom');
-});
+
+router.post('/login',AuthController.authenticate);
 
 router.get('/author', UserController.index);
 router.post('/author', UserController.store);
