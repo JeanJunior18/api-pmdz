@@ -6,12 +6,13 @@ class Booklets extends Model{
       title: DataTypes.STRING,
       imageLink: DataTypes.STRING,
       downloadlink: DataTypes.STRING,
+      author: DataTypes.STRING
     },{
       sequelize
     })
   }
   static associate(model){
-    this.belongsTo(model.Users, { foreignKey: 'authorId', as: 'author' })
+    this.belongsTo(model.Users, { foreignKey: 'authorId', as: 'BookAuthor' })
   }
 }
 module.exports = Booklets;

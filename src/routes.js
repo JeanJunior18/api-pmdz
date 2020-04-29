@@ -11,9 +11,10 @@ router.post('/login',AuthController.authenticate);
 router.get('/author', UserController.index);
 router.post('/author', UserController.store);
 
+router.get('/:author_id/booklet',  BookletController.index);
+
 /* Authenticate is required */
 router.use(auth)
-router.get('/:author_id/booklet',  BookletController.index);
 router.post('/:author_id/booklet',  BookletController.store);
 
 module.exports = router;

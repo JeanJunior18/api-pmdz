@@ -1,6 +1,8 @@
 const Booklet = require('../models/Booklets');
 const User = require('../models/Users');
 
+const jwt = require('jsonwebtoken');
+
 module.exports = {
   async index(req, res){
     const authorId = req.params.author_id;
@@ -12,14 +14,22 @@ module.exports = {
   },
   async store(req, res){
     const authorId = req.params.author_id;
+
+    if(authorId != jwt.decode(req.headers.authorization).id)
+      return res.status(401).json({error: 'Access Denied!'})
+
     const { title, imageLink, downloadlink } = req.body
-    console.log(req.body)
+  
     
     const user = await User.findByPk(authorId);
     if(!user) 
       return res.status(400).json({error: 'User not found'})
 
-    const book = await Booklet.create({ title, imageLink, downloadlink, authorId })
+    
+    const author = `${user.lastname.toUpperCase()}, ${user.firstname}`
+    const data = { title, imageLink, downloadlink, authorId, author}
+    const book = await Booklet.create(data)
+
 
     return res.json(book)
   }
