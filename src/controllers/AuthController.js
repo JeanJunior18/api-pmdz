@@ -13,14 +13,20 @@ module.exports = {
       const { email, password } = req.body
 
       const user = await User.findOne({where: {email}});
-      
+      console.log( await bcrypt.compare(password, user.password))
+
       if(!user) 
         return res.json({error: 'User not found'});
-      if(!bcrypt.compare(password, user.password))
-        return res.json({error: 'Incorrect Password'});
-      user.password = undefined;
-      const token = generateToken({id: user.id});
+
+      if(await bcrypt.compare(password, user.password)){
+        user.password = undefined;
+        const token = generateToken({id: user.id});
       
-      return res.json({user, token});
+        return res.status(200).json({user, token});
+        
+      }
+      else{
+        return res.json({error: 'Incorrect Password'});
+    }
   }
 }
