@@ -1,6 +1,7 @@
 require('dotenv/config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const secret = process.env.JWT_TOKEN
 
 const User = require('../models/Users');
 
@@ -28,5 +29,15 @@ module.exports = {
       else{
         return res.json({error: 'Incorrect Password'});
     }
+  },
+  async verify(req, res){
+    const {token} = req.body
+    
+    jwt.verify(token, secret, (err, decoded)=>{
+      if(err)
+        return res.send(false)
+      req.userId = decoded.id
+      return res.send(true)
+    })
   }
 }
