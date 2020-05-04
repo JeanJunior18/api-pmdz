@@ -13,7 +13,7 @@ module.exports = {
     const verify = await User.findOne({where: {email}});
 
     if(verify)
-      return res.status(400).json({error: 'Email já foi cadastrado'});
+      return res.status(403).json({error: 'Email já foi cadastrado'});
     
     const hash = await bcrypt.hash(password, 10)
     

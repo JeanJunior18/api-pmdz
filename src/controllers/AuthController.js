@@ -17,7 +17,7 @@ module.exports = {
    
 
       if(!user) 
-        return res.json({error: 'User not found'});
+        return res.status(404).json({error: 'User not found'});
         else
       if(await bcrypt.compare(password, user.password)){
         user.password = undefined;
@@ -27,7 +27,7 @@ module.exports = {
         
       }
       else{
-        return res.json({error: 'Incorrect Password'});
+        return res.status(401).json({error: 'Incorrect Password'});
     }
   },
   async verify(req, res){

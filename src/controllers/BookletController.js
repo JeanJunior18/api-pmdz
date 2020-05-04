@@ -16,7 +16,7 @@ module.exports = {
     const authorId = req.params.author_id;
 
     if(authorId != jwt.decode(req.headers.authorization).id)
-      return res.status(401).json({error: 'Access Denied!'})
+      return res.status(403).json({error: 'Access Denied!'})
 
     const { title, imageLink, downloadlink } = req.body
   
