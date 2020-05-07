@@ -5,6 +5,11 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
   async index(req, res){
+    const book = await Booklet.findAll();
+    
+    return res.status(200).json(book)
+  },
+  async authorBooks(req, res){
     const authorId = req.params.author_id;
     const userBooks = await User.findByPk(authorId, {
       include: { association: 'booklets' }

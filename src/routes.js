@@ -10,8 +10,9 @@ router.post('/login',AuthController.authenticate);
 
 router.get('/author', UserController.index);
 router.post('/author', UserController.store);
+router.get('/booklets', BookletController.index)
 
-router.get('/:author_id/booklet',  BookletController.index);
+router.get('/:author_id/booklet',  BookletController.authorBooks);
 
 
 router.post('/verify', AuthController.verify);
